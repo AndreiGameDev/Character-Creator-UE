@@ -14,4 +14,6 @@ class UNREALMECHANICS_API AUnrealMechanicsGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+	UFUNCTION(BlueprintCallable, Category = "My Nodes")
+	static int32 SomeIntReturningFunction(FString Text, int32 Number, FString& TextOut);
 };
