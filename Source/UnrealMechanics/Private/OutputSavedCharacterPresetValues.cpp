@@ -3,23 +3,7 @@
 
 #include "OutputSavedCharacterPresetValues.h"
 #include "Engine/DataTable.h" // Engine
-
-// Define a struct to hold your data
-USTRUCT(BlueprintType)
-struct FCharacterPresetRow : public FTableRowBase
-{
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 HeadValue;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 ChestValue;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 LegsValue;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 FeetValue;
-};
+#include "FCharacterPresetRow.h"
 
 TArray<FName> UOutputSavedCharacterPresetValues::GetCharacterPresetNames(UDataTable* DataTable, bool& bOutSuccess, FString& outReportMessage)
 {
