@@ -5,26 +5,11 @@
 #include "Engine/DataTable.h" // Engine
 #include "FCharacterPresetRow.h"
 
-TArray<FName> UOutputSavedCharacterPresetValues::GetCharacterPresetNames(UDataTable* DataTable, bool& bOutSuccess, FString& outReportMessage)
-{
-	if (IsDataTableValid(DataTable) == false) {
-		bOutSuccess = false;
-		outReportMessage = "Data Tabe not valid";
-		return TArray<FName>();
-	}
 
-	bOutSuccess = true;
-	outReportMessage = "Character preset names retrieved successfully";
-	return DataTable->GetRowNames();
-}
 
-void UOutputSavedCharacterPresetValues::SaveCharacterPreset(TArray<FCharacterPresetRow> DataTable, FName PresetName, int32 inHeadValue, int32 inChestValue, int32 inLegsValue, int32 inFeetValue, bool& bOutSuccess, FString& outReportMessage)
+
+void UOutputSavedCharacterPresetValues::SaveCharacterPreset(TArray<FCharacterPresetRow> DataTable, FName PresetName, int32 inHeadValue, int32 inChestValue, int32 inLegsValue, int32 inFeetValue, TArray<FCharacterPresetRow>& outArrayPreset, bool& bOutSuccess, FString& outReportMessage)
 {
-	if (DataTable.IsEmpty()) {
-		bOutSuccess = false;
-		outReportMessage = "DataTable is null";
-		return;
-	}
 	for (FCharacterPresetRow preset : DataTable) {
 		if (preset.PresetName == PresetName) {
 			bOutSuccess = false;
@@ -42,31 +27,12 @@ void UOutputSavedCharacterPresetValues::SaveCharacterPreset(TArray<FCharacterPre
 
 	// Add the row to the data table
 	DataTable.Add(*NewRow);
+	outArrayPreset = DataTable;
 	bOutSuccess = true;
 	outReportMessage = "Character preset saved successfully";
 }
 
-void UOutputSavedCharacterPresetValues::ExposeCostumisationValues(UDataTable* DataTable, FName PresetName, int32& headValue, int32& chestValue, int32& legsValue, int32& feetValue, bool& bOutSuccess, FString& outReportMessage)
-{
-	if (IsDataTableValid(DataTable) == false) {
-		bOutSuccess = false;
-		outReportMessage = "DataTable is null";
-		return;
-	}
-	FCharacterPresetRow* infoRow = DataTable->FindRow<FCharacterPresetRow>(PresetName, "");
-	if (infoRow == nullptr) {
-		bOutSuccess = false;
-		outReportMessage = "Row not found";
-		return;
-	}
-	headValue = infoRow->HeadValue;
-	chestValue = infoRow->ChestValue;
-	legsValue = infoRow->LegsValue;
-	feetValue = infoRow->FeetValue;
 
-	bOutSuccess = true;
-	outReportMessage = "Extracted Succesfully";
-}
 
 bool UOutputSavedCharacterPresetValues::IsRowNameValid(UDataTable* DataTable, FName rowname) {
 	TArray<FName> rowNames = DataTable->GetRowNames();
