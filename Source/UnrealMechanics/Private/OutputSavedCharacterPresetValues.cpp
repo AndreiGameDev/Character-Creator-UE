@@ -18,26 +18,30 @@ TArray<FName> UOutputSavedCharacterPresetValues::GetCharacterPresetNames(UDataTa
 	return DataTable->GetRowNames();
 }
 
-void UOutputSavedCharacterPresetValues::SaveCharacterPreset(UDataTable* DataTable, FName PresetName, int32 inHeadValue, int32 inChestValue, int32 inLegsValue, int32 inFeetValue, bool& bOutSuccess, FString& outReportMessage)
+void UOutputSavedCharacterPresetValues::SaveCharacterPreset(TArray<FCharacterPresetRow> DataTable, FName PresetName, int32 inHeadValue, int32 inChestValue, int32 inLegsValue, int32 inFeetValue, bool& bOutSuccess, FString& outReportMessage)
 {
-	if (IsDataTableValid(DataTable) == false) {
+	if (DataTable.IsEmpty()) {
 		bOutSuccess = false;
 		outReportMessage = "DataTable is null";
 		return;
 	}
-	if (IsRowNameValid(DataTable, PresetName) == false) {
-		return;
+	for (FCharacterPresetRow preset : DataTable) {
+		if (preset.PresetName == PresetName) {
+			bOutSuccess = false;
+			outReportMessage = "Name is not valid, it already exists";
+			return;
+		}
 	}
 	// Create a new row
 	FCharacterPresetRow* NewRow = new FCharacterPresetRow();
+	NewRow->PresetName = PresetName.ToString();
 	NewRow->HeadValue = inHeadValue;
 	NewRow->ChestValue = inChestValue;
 	NewRow->LegsValue = inLegsValue;
 	NewRow->FeetValue = inFeetValue;
 
 	// Add the row to the data table
-	DataTable->AddRow(PresetName, *NewRow);
-
+	DataTable.Add(*NewRow);
 	bOutSuccess = true;
 	outReportMessage = "Character preset saved successfully";
 }

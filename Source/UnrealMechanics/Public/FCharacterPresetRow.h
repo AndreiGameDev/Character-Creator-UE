@@ -15,6 +15,9 @@ struct FCharacterPresetRow : public FTableRowBase
 	GENERATED_USTRUCT_BODY()
 
 public:
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "PresetName", MakeStructureDefaultValue = "0"))
+	FString PresetName;
 	/** Please add a variable description */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "HeadValue", MakeStructureDefaultValue = "0"))
 	int32 HeadValue;

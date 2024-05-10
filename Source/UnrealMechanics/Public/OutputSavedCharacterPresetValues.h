@@ -20,7 +20,7 @@ public:
 	static TArray<FName> GetCharacterPresetNames(UDataTable* DataTable, bool& bOutSuccess, FString& outReportMessage);
 
 	UFUNCTION(BlueprintCallable, Category = "CharacterPreset")
-	static void SaveCharacterPreset(UDataTable* DataTable, FName PresetName, int32 HeadValue, int32 ChestValue, int32 LegsValue, int32 FeetValue, bool& bOutSuccess, FString& outReportMessage);
+	static void SaveCharacterPreset(TArray<FCharacterPresetRow> ArrayPresetRows, FName PresetName, int32 HeadValue, int32 ChestValue, int32 LegsValue, int32 FeetValue, bool& bOutSuccess, FString& outReportMessage);
 
 	UFUNCTION(BlueprintCallable, Category = "CharacterPreset")
 	static void ExposeCostumisationValues(UDataTable* DataTable, FName PresetName, int32& headValue, int32& chestValue, int32& legsValue, int32& feetValue, bool& bOutSuccess, FString& outReportMessage);
