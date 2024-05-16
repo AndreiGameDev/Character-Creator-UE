@@ -6,9 +6,9 @@
 #include "UObject/NoExportTypes.h"
 #include "FCharacterPresetRow.generated.h"
 
-/**
- * 
- */
+/// <summary>
+/// Character Preset Struct values that we will be using to save clothing parts and the name of the preset
+/// </summary>
 USTRUCT(BlueprintType)	
 struct FCharacterPresetRow : public FTableRowBase
 {

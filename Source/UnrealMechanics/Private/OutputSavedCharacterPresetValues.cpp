@@ -1,15 +1,25 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+
 #include "OutputSavedCharacterPresetValues.h"
 #include "Engine/DataTable.h" // Engine
 #include "FCharacterPresetRow.h"
 
+	
 
-
-
-void UOutputSavedCharacterPresetValues::SaveCharacterPreset(TArray<FCharacterPresetRow> DataTable, FName PresetName, int32 inHeadValue, int32 inChestValue, int32 inLegsValue, int32 inFeetValue, TArray<FCharacterPresetRow>& outArrayPreset, bool& bOutSuccess, FString& outReportMessage)
+void UOutputSavedCharacterPresetValues::SaveCharacterPreset(
+	TArray<FCharacterPresetRow> DataTable, 
+	FName PresetName, 
+	int32 inHeadValue, 
+	int32 inChestValue, 
+	int32 inLegsValue,
+	int32 inFeetValue, 
+	TArray<FCharacterPresetRow>& outArrayPreset,
+	bool& bOutSuccess,
+	FString& outReportMessage)
 {
+	// If there is a preset with this name inside the array, then return and output error message
 	for (FCharacterPresetRow preset : DataTable) {
 		if (preset.PresetName == PresetName) {
 			bOutSuccess = false;
@@ -17,7 +27,7 @@ void UOutputSavedCharacterPresetValues::SaveCharacterPreset(TArray<FCharacterPre
 			return;
 		}
 	}
-	// Create a new row
+
 	FCharacterPresetRow* NewRow = new FCharacterPresetRow();
 	NewRow->PresetName = PresetName.ToString();
 	NewRow->HeadValue = inHeadValue;
@@ -25,7 +35,6 @@ void UOutputSavedCharacterPresetValues::SaveCharacterPreset(TArray<FCharacterPre
 	NewRow->LegsValue = inLegsValue;
 	NewRow->FeetValue = inFeetValue;
 
-	// Add the row to the data table
 	DataTable.Add(*NewRow);
 	outArrayPreset = DataTable;
 	bOutSuccess = true;
@@ -33,25 +42,6 @@ void UOutputSavedCharacterPresetValues::SaveCharacterPreset(TArray<FCharacterPre
 }
 
 
-
-bool UOutputSavedCharacterPresetValues::IsRowNameValid(UDataTable* DataTable, FName rowname) {
-	TArray<FName> rowNames = DataTable->GetRowNames();
-	if (rowNames.Contains(rowname)) {
-		return false;
-	}
-
-	return true;
-}
-
-bool UOutputSavedCharacterPresetValues::IsDataTableValid(UDataTable* dataTable)
-{
-	if (dataTable == nullptr) {
-		return false;
-	}
-	else {
-		return true;
-	}
-}
 
 
 
